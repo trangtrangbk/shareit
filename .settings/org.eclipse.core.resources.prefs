@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+encoding//WebContent/admin/index/index.jsp=UTF-8
+encoding//WebContent/public/index.jsp=UTF-8
+encoding//src/controller/AdminAddUserController.java=UTF-8
+encoding//src/controller/AdminEditNewsController.java=UTF-8
+encoding//src/controller/AdminEditUserController.java=UTF-8
+encoding//src/controller/AdminIndexCatController.java=UTF-8
+encoding//src/controller/AdminIndexCommentController.java=UTF-8
+encoding//src/controller/AdminIndexUserController.java=UTF-8
+encoding//src/controller/PublicCommentController.java=UTF-8
+encoding//src/controller/PublicContactController.java=UTF-8
+encoding//src/controller/PublicIndexController.java=UTF-8
+encoding//src/model/dao/CategoryDAO.java=UTF-8
+encoding//src/model/dao/CommentDAO.java=UTF-8
+encoding//src/model/dao/NewsDAO.java=UTF-8
+encoding/<project>=UTF-8
