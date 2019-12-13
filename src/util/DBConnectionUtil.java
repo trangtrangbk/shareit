@@ -7,9 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnectionUtil {
-	/*private static String url = "jdbc:mysql://node208361-shareit.j.layershift.co.uk/shareit?useUnicode=true&characterEncoding=UTF-8";
-	private static String user = "root";
-	private static String password = "HNXvka24543";*/
 	private static String url = "jdbc:mysql://localhost/shareit?useUnicode=true&characterEncoding=UTF-8";
 	private static String user = "root";
 	private static String password = "";
@@ -18,7 +15,6 @@ public class DBConnectionUtil {
 	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (Exception e) {
 			System.out.println("Không thể nạp driver");

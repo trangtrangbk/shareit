@@ -5,6 +5,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+ 
 <%@ include file="/templates/admin/inc/header.jsp" %>
  <div class="limiter">
 		<%
@@ -38,12 +39,11 @@
                         </div>
                         <br>
 						<div class="row header">
-							<div class="cell"  style="width: 100px;">ID tin</div>
-							<div class="cell" style="width: 300px;">Tên tin</div>
-							<div class="cell"  style="width: 120px;">Danh mục</div>
-							<div class="cell" style="width: 200px;">Hình ảnh</div>
-							<div class="cell" style="width: 80px;">Trạng thái</div>
-							<div class="cell" style="width: 160px;">Chức năng</div>
+							<div class="cell"  style="width: 10%;">ID tin</div>
+							<div class="cell" style="width: 20%;">Tên tin</div>
+							<div class="cell"  style="width: 20%;">Danh mục</div>
+							<div class="cell" style="width: 30%;">Hình ảnh</div>
+							<div class="cell" style="width: 20%;">Chức năng</div>
 						</div>
 								<% 
                                 @SuppressWarnings("unchecked")
@@ -52,10 +52,10 @@
                                 	for (News obj:news ) {  
                                 %>
                                 	<div class="row">
-										<div class="cell" style="width: 100px;"><%=obj.getId() %></div>
-										<div class="cell" style="width: 300px;"><%=obj.getName() %></div>
-										<div class="cell" style="width: 120px;"><%=obj.getCat().getName() %></div>
-										<div class="cell" style="width: 200px;">
+										<div class="cell" style="width: 10%;"><%=obj.getId() %></div>
+										<div class="cell" style="width: 20%;"><%=obj.getName() %></div>
+										<div class="cell" style="width: 20%;"><%=obj.getCat().getName() %></div>
+										<div class="cell" style="width: 30%;">
 											<%
                                         	if (!obj.getPicture().equals("")){
                                         	%>
@@ -68,18 +68,25 @@
     											alt=""/>
     											<%} %>
 										</div>
-										<div class="cell" style="width:80px;">
-											<% if (obj.isState()!=false){ %>
-											<div id="state-<%=obj.getId()%>"><a href="javascript:void(0)" onclick="return xulyan(<%=obj.getId() %>)" title="" style="color: green;" ><i class="fas fa-check-circle"></i></a></div>
-											<%}else{ %>
-											<div id="state-<%=obj.getId()%>"><a href="javascript:void(0)" title="" onclick="return xulyhien(<%=obj.getId() %>)"><i class="fas fa-eye-slash"></i></a></div>
-											<%} %>
+										<div class="cell" style="width: 20%;">
+										<a href="javascript:void(0)" onclick="document.getElementById('<%=obj.getId() %>').style.display='block'" title="" style="color: white" class="btn btn-info"><i class="fa fa-eye"></i></a>
+											<a href="<%=request.getContextPath() %>/admin/news/edit?id=<%=obj.getId() %>" title="" style="color: white" class="btn btn-success"><i class="fa fa-edit "></i></a>
+			                                <a href="<%=request.getContextPath() %>/admin/news/del?id=<%=obj.getId() %>" title="" style="color: white" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xoá?')"><i class="fas fa-trash-alt"></i></a>
 										</div>
-										<div class="cell" style="width: 160px;">
-											<a href="<%=request.getContextPath() %>/admin/news/edit?id=<%=obj.getId() %>" title="" style="color: white" class="btn btn-success"><i class="fa fa-edit "></i> Sửa</a>
-			                                <a href="<%=request.getContextPath() %>/admin/news/del?id=<%=obj.getId() %>" title="" style="color: white" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xoá?')"><i class="fas fa-trash-alt"></i> Xóa</a>
-										</div>
+										  <div id="<%=obj.getId() %>" class="w3-modal" >
+    <div class="w3-modal-content" style="padding: 40px !important;">
+      <div class="w3-container">
+        <span onclick="document.getElementById('<%=obj.getId() %>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+        <p style="font-size: 25px; font-weight: bold"><%=obj.getName() %></p>
+        <p style="font-size: 15px; color: #0000008a">Ngày đăng: <%=obj.getDate_create() %> - Lượt xem: <%=obj.getCounter() %></p>
+        <p  style=" font-weight: bold"><%=obj.getPreview_text() %></p>
+       <p><%=obj.getDetail_text() %></p>
+      </div>
+    </div>
+  </div>
 									</div>
+
+
 						<%} %>
 					</div>
 			<br>
@@ -88,55 +95,28 @@
                int numberOfItems= (Integer) request.getAttribute("numberOfItems");
                int numberOfPages= (Integer) request.getAttribute("numberOfPages");
                int currentPage= (Integer) request.getAttribute("currentPage");
-               if (news!=null && news.size()>0){        	                
+               if (news!=null && news.size()>0){  
+            if(currentPage > 1){%>
+            <a class="next page-numbers" href="<%=request.getContextPath()%>/admin/news/index?page=<%=currentPage-1%>">			
+			prev</a>	
+            <% }
                for (int i=1;i<=numberOfPages;i++){
                     if (currentPage==i){ %>
                     <span aria-current="page" class="page-numbers current"><%=i %></span>
               <%    }else { %>			
 				<a class="page-numbers" href="<%=request.getContextPath()%>/admin/news/index?page=<%=i%>"><%=i %></a> 
  				<%}
-                    } %>
+                    }
+               if(currentPage <numberOfPages){
+               %>
 				<a class="next page-numbers" href="<%=request.getContextPath()%>/admin/news/index?page=<%=currentPage+1%>">			
-				<span class="screen-reader-text">Next Posts</span>»</a>		
-				<%} %>		
+				next</a>		
+				<%}} %>		
 			</div>
 			</div>
 		</div>
+		
 	</div> 
-	<script type="text/javascript">
-				function xulyan(id){
-					var tmp="#state-"+id;
-					$.ajax({
-						url: '<%=request.getContextPath()%>/admin/active?id='+id,
-						cache: false,
-						data: {},
-						success: function(data){
-							$(tmp).html('<a href="javascript:void(0)" title="" onclick="return xulyhien('+id+')"><i style="color:red;" class="fas fa-eye-slash"></i></a>');
-						},
-						error: function (){
-							alert('Có lỗi xảy ra');
-						}
-					});					
-					return false;
-				}				
-		</script>
-		<script>
-		function xulyhien(id){
-			var tmp="#state-"+id;
-			$.ajax({
-				url: '<%=request.getContextPath()%>/admin/active?id='+id,
-				cache: false,
-				data: {},
-				success: function(data){
-					$(tmp).html('<a href="javascript:void(0)" onclick="return xulyan('+id+')" title="" style="color: green;" ><i class="fas fa-check-circle"></i></a>');
-				},
-				error: function (){
-					alert('Có lỗi xảy ra');
-				}
-			});					
-			return false;
-		}
-		</script>
 <script>
     document.getElementById("menu-item-3").classList.add('current-menu-item');
 </script>    

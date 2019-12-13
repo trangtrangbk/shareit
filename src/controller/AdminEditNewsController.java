@@ -95,17 +95,15 @@ public class AdminEditNewsController extends HttpServlet {
 		}
 		else picture= FileUtil.rename(fileName);
 		filePath = filePath + File.separator + picture;	
-		News item=new News(id, newsName, description, detail, null, picture, 0, new Category(catId, "", 0), new User(1, "","", "", ""), true);	
+		News item=new News(id, newsName, description, detail, null, picture, 0, new Category(catId, ""), true);	
 		System.out.println(item);
 		if (newsDAO.editItem(item)>0) {
 			if (!fileName.isEmpty()) {
-				//xoÃ¡ file cÅ©
 				String oldFilePartName=filePath + File.separator + news.getPicture();
 				File oldFile=new File(oldFilePartName);
-				if (oldFile.exists()) {//náº¿u tá»“n táº¡i
+				if (oldFile.exists()) {
 					oldFile.delete();
 			}
-				//ghi file
 				part.write(filePath);
 			}
 			response.sendRedirect(request.getContextPath()+"/admin/news/index?msg=2");

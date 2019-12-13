@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <div id="footer" class="footer-wrap">
             <footer id="colophon" class="site-footer container clearfix" role="contentinfo">
-                <div id="footer-text" class="site-info"> <span class="credit-link"> Powered by <a href="http://wordpress.org" title="WordPress">WordPress</a> and <a href="https://themezee.com/themes/chronus/" title="Chronus WordPress Theme">Chronus</a>. </span>
+                <div id="footer-text" class="site-info">
+                 <span class="credit-link"> Made by <a href="#" title="WordPress">Trang Tran.</a>
+                </span>
                 </div>
             </footer>
         </div>

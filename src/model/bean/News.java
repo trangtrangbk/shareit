@@ -11,7 +11,6 @@ public class News {
 	private String picture;
 	private int counter;
 	private Category cat;
-	private User user;
 	private boolean state;
 	public int getId() {
 		return id;
@@ -61,12 +60,6 @@ public class News {
 	public void setCat(Category cat) {
 		this.cat = cat;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	public boolean isState() {
 		return state;
 	}
@@ -74,7 +67,7 @@ public class News {
 		this.state = state;
 	}
 	public News(int id, String name, String preview_text, String detail_text, Timestamp date_create, String picture,
-			int counter, Category cat, User user, boolean state) {
+			int counter, Category cat, boolean state) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -84,7 +77,6 @@ public class News {
 		this.picture = picture;
 		this.counter = counter;
 		this.cat = cat;
-		this.user = user;
 		this.state = state;
 	}
 	public News() {
@@ -94,7 +86,7 @@ public class News {
 	public String toString() {
 		return "News [id=" + id + ", name=" + name + ", preview_text=" + preview_text + ", detail_text=" + detail_text
 				+ ", date_create=" + date_create + ", picture=" + picture + ", counter=" + counter + ", cat=" + cat
-				+ ", user=" + user + ", state=" + state + "]";
+				+ ", state=" + state + "]";
 	}
 	
 }

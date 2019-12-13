@@ -26,11 +26,13 @@
       		 } 
                 News news=(News) request.getAttribute("news");
                String newsName="",preview_text="",detail_text="",picture="";
+               int cat_Id = 0;
                if (news!=null){
             	     newsName=news.getName();
                      preview_text=news.getPreview_text();
                      detail_text=news.getDetail_text();
                      picture=news.getPicture();
+                     cat_Id = news.getCat().getId(); 
                }
          %>
         <hr />
@@ -55,9 +57,12 @@
                                         		for (Category obj:list){
                                         			String catName=obj.getName();
                                         			int catId=obj.getId();
-                                        
+                                        			String select = "";
+                                        			if(catId == cat_Id){
+                                        				select = "selected"; 
+                                        			} else select = "";
                                         %>
-	                                        <option value="<%=catId%>"><%=catName %></option>
+	                                        <option value="<%=catId%>" <%=select %>><%=catName %></option>
 	                                        <%}} %>
                                         </select>
                                     </div>

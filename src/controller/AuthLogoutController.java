@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import model.bean.User;
 import model.dao.UserDAO;
-import util.StringUtil;
 
 public class AuthLogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

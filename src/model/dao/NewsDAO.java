@@ -22,26 +22,24 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true "
+					+ " where state=true "
 					+ "ORDER BY n.id DESC LIMIT ?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, number);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -56,25 +54,23 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true "
+					+ " where state=true "
 					+ "ORDER BY n.id DESC";
 			st=conn.createStatement();
 			rs=st.executeQuery(sql);
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -107,26 +103,24 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName,c.parent_id "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id  ORDER BY n.id DESC LIMIT ?,?";
+					+ "ORDER BY n.id DESC LIMIT ?,?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, offset);
 			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"), rs.getInt("parent_id"));
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category, user, rs.getBoolean("n.state"));
+						rs.getInt("counter"),category, rs.getBoolean("n.state"));
 				listItem.add(obj);
 			}
 			
@@ -141,15 +135,14 @@ public class NewsDAO {
 		int result=0;
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="insert into new(name,preview_text,detail_text,picture,cat_id,user_id,state) VALUES(?,?,?,?,?,?,?)";
+			String sql="insert into new(name,preview_text,detail_text,picture,cat_id,state) VALUES(?,?,?,?,?,?)";
 			pst=conn.prepareStatement(sql);
 			pst.setString(1, news.getName());
 			pst.setString(2, news.getPreview_text());
 			pst.setString(3, news.getDetail_text());
 			pst.setString(4, news.getPicture());
 			pst.setInt(5, news.getCat().getId());
-			pst.setInt(6, news.getUser().getId());
-			pst.setBoolean(7, news.isState());
+			pst.setBoolean(6, news.isState());
 			result=pst.executeUpdate();
 		} catch ( SQLException e) {
 			e.printStackTrace();
@@ -177,24 +170,23 @@ public class NewsDAO {
 		News news=null;
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName,c.parent_id " + 
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName " + 
 					" from new AS n " + 
 					" INNER JOIN cat AS c " + 
 					" ON n.cat_id=c.id " + 
-					" INNER JOIN user  AS u " + 
-					" ON n.user_id=u.id  where n.id=?";
+					"  where n.id=?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, id);
 			rs=pst.executeQuery();
 			if (rs.next()) {
-				Category category=new Category(rs.getInt("cat_id"), rs.getString("catName"), 1);				
+				Category category=new Category(rs.getInt("cat_id"), rs.getString("catName"));				
 				news=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category, new User(rs.getInt("user_id"), rs.getString("u.username"), "", "", ""), rs.getBoolean("state"));
+						rs.getInt("counter"),category, rs.getBoolean("state"));
 			}
 			
 		} catch ( SQLException e) {
@@ -208,16 +200,15 @@ public class NewsDAO {
 		int result=0;
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="update new set name=?,preview_text=?,detail_text=?,picture=?,cat_id=?,user_id=?,state=? where id=?";
+			String sql="update new set name=?,preview_text=?,detail_text=?,picture=?,cat_id=?,state=? where id=?";
 			pst=conn.prepareStatement(sql);
 			pst.setString(1, item.getName());
 			pst.setString(2, item.getPreview_text());
 			pst.setString(3, item.getDetail_text());
 			pst.setString(4, item.getPicture());
 			pst.setInt(5, item.getCat().getId());
-			pst.setInt(6, item.getUser().getId());
-			pst.setBoolean(7, item.isState());
-			pst.setInt(8, item.getId());
+			pst.setBoolean(6, item.isState());
+			pst.setInt(7, item.getId());
 			result=pst.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -264,27 +255,25 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true && cat_id=? "
+					+ " where state=true && cat_id=? "
 					+ "ORDER BY n.id DESC LIMIT ?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, id);
 			pst.setInt(2, number);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -299,27 +288,25 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true &&(cat_id=? or parent_id=?) "
+					+ " where state=true &&(cat_id=? or parent_id=?) "
 					+ "ORDER BY n.id DESC ";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, id);
 			pst.setInt(2, id);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -334,7 +321,7 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();		
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
@@ -347,15 +334,14 @@ public class NewsDAO {
 			pst.setInt(3, i);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -390,12 +376,11 @@ public class NewsDAO {
 		ArrayList<News> listItem= new ArrayList<>();
 		try {
 			conn=DBConnectionUtil.getConnection();
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName,c.parent_id "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true &&(n.cat_id=? or c.parent_id=?) "
+					+ "where state=true &&(n.cat_id=? or c.parent_id=?) "
 					+ "ORDER BY n.id DESC LIMIT ?,?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, id);
@@ -404,15 +389,14 @@ public class NewsDAO {
 			pst.setInt(4, DefineUtil.NUMBER_PER_PAGE);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			
@@ -428,27 +412,25 @@ public class NewsDAO {
 		try {
 			conn=DBConnectionUtil.getConnection();
 			String tmp="%"+key+"%";
-			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.user_id,n.state,u.username,c.name AS catName,c.parent_id "
+			String sql="select n.id,n.name AS newsName,n.preview_text,n.detail_text,n.date_create,n.picture,n.counter,n.cat_id,n.state,c.name AS catName "
 					+ "from new AS n "
 					+ "INNER JOIN cat AS c "
 					+ "ON n.cat_id=c.id "
-					+ "INNER JOIN user  AS u "
-					+ "ON n.user_id=u.id where state=true &&(n.name LIKE \""+tmp+"\" ) "
+					+ " where state=true &&(n.name LIKE \""+tmp+"\" ) "
 					+ "ORDER BY n.id DESC LIMIT ?,?";
 			pst=conn.prepareStatement(sql);
 			pst.setInt(1, offset);
 			pst.setInt(2, DefineUtil.NUMBER_PER_PAGE);
 			rs=pst.executeQuery();
 			while (rs.next()) {
-				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"),0);
-				User user=new User(rs.getInt("n.user_id"), rs.getString("u.username"), "", "", "");
+				Category category=new Category(rs.getInt("n.cat_id"), rs.getString("catName"));
 				News obj=new News(rs.getInt("id"), 
 						rs.getString("newsName"), 
 						rs.getString("preview_text"), 
 						rs.getString("detail_text"), 
 						rs.getTimestamp("date_create"),
 						rs.getString("picture"),
-						rs.getInt("counter"),category,user,rs.getBoolean("state"));
+						rs.getInt("counter"),category,rs.getBoolean("state"));
 				listItem.add(obj);
 			}
 			

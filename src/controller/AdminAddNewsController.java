@@ -54,7 +54,7 @@ public class AdminAddNewsController extends HttpServlet {
 		//xử lí upload file
 		String fileName=FileUtil.uploadFile(request, "picture", DefineUtil.DIR_UPLOAD);		
 		//tạo đối tượng =>viết phương thức insert table
-		News news=new News(0, newsName, description, detail, null, fileName, 0, new Category(catId, "", 0), new User(1, "","", "", ""), true);	
+		News news=new News(0, newsName, description, detail, null, fileName, 0, new Category(catId, ""), true);	
 		if (newsDAO.addItem(news)>0) {
 			response.sendRedirect(request.getContextPath()+"/admin/news/index?msg=1");
 			return;

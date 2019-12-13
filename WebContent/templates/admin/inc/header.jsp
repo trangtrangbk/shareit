@@ -18,7 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templates/admin/vendor/select2/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templates/admin/vendor/perfect-scrollbar/perfect-scrollbar.css">
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templates/admin/css/util.css">
-	
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script type="text/javascript" src="<%=request.getContextPath() %>/templates/admin/js/coin-slider.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath() %>/templates/admin/vendor/ckeditor/ckeditor.js"></script>
     <link rel="stylesheet" href="https://preview.themezee.com/chronus/wp-content/cache/min/79/55bc2c57ad9dc382cf75ecd50907a232.css" data-minify="1" />
@@ -26,6 +26,22 @@
     <link rel="alternate" type="application/rss+xml" title="Chronus &raquo; Feed" href="https://preview.themezee.com/chronus/feed/" />
     <link rel="alternate" type="application/rss+xml" title="Chronus &raquo; Comments Feed" href="https://preview.themezee.com/chronus/comments/feed/" />
     <style type="text/css">
+    	.w3-container p{
+    	margin : 0px 0px 15px 0px !important;
+    	padding: 0px !important;
+    	}
+    	.header:hover{
+    	background-color: #5763b97a !important;
+    	}
+    	.row{
+    	margin : 0 !important;
+    	}
+    	.site{
+    	background: none !important; 
+    	}
+    	#page-inner{
+    	min-height: 500px !important;
+    	}
         img.wp-smiley,
         img.emoji {
             display: inline!important;
@@ -54,28 +70,10 @@
 	<script src="<%=request.getContextPath() %>/templates/admin/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="<%=request.getContextPath() %>/templates/admin/vendor/select2/select2.min.js"></script>
 	<script src="<%=request.getContextPath() %>/templates/admin/js/main.js"></script>
-    <script type="text/javascript">
-        (function(i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date();
-            a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0];
-            a.async = 1;
-            a.src = g;
-            m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', '__gaTracker');
 
-        __gaTracker('create', 'UA-4734666-2', 'auto');
-        __gaTracker('set', 'forceSSL', true);
-        __gaTracker('set', 'anonymizeIp', true);
-        __gaTracker('require', 'displayfeatures');
-        __gaTracker('send', 'pageview');
-    </script>
 </head>
 
-<body class="home blog"><a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<body class="home blog">
     <div id="page" class="hfeed site">
         <header id="masthead" class="site-header clearfix" role="banner">
             <div class="header-main container clearfix">
@@ -84,8 +82,8 @@
             <b> &nbsp; <a href="<%=request.getContextPath() %>/auth/logout" title="Đăng xuất" style="color: white" class="btn btn-danger">Đăng xuất</a> </b>
             </div>
                 <div id="logo" class="site-branding clearfix">
-                    <h1 class="site-title"><a href="<%=request.getContextPath()%>/admin/index" rel="home">SHARE IT</a></h1>
-                    <p class="site-description">Chào mừng đến với trang quản lí Share IT</p>
+                    <h1 class="site-title"><a href="<%=request.getContextPath()%>/admin/index" rel="home">News Management</a></h1>
+                    <p class="site-description">Chào mừng đến với trang quản lí tin tức</p>
                 </div>
             </div>
             
@@ -93,11 +91,7 @@
                 <nav id="main-navigation" class="primary-navigation navigation container clearfix" role="navigation">
                     <ul id="menu-navigation" class="main-navigation-menu">
                         <li id="menu-item-1" class="menu-item menu-item-type-custom menu-item-object-custom current_page_item menu-item-home menu-item-2732"><a href="<%=request.getContextPath()%>/admin/index">Trang chủ</a></li>
-                        <li id="menu-item-2" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2741"><a href="<%=request.getContextPath()%>/admin/cat/index">Quản lý danh mục</a></li>
-                        <li id="menu-item-3" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2737"><a href="<%=request.getContextPath()%>/admin/news/index">Quản lý tin tức</a></li>
-                        <li id="menu-item-4" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2746"><a href="<%=request.getContextPath()%>/admin/user/index">Quản lý người dùng</a></li>
-                        <li id="menu-item-5" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2746"><a href="<%=request.getContextPath()%>/admin/comment/index">Quản lý bình luận</a></li>
-                        <li id="menu-item-6" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2746"><a href="<%=request.getContextPath()%>/admin/contact/index">Quản lý liên hệ</a></li>
+                        <li id="menu-item-3" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2737"><a href="<%=request.getContextPath()%>/admin/news/index">Tin tức</a></li>
                     </ul>
                 </nav>
             </div>
